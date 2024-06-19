@@ -1,0 +1,163 @@
+/**
+ * @file asemaphore
+ *
+ * @brief Envelope upon the ESP semaphores api
+ *
+ *	Need pre-included including file semphr.h
+ *
+ * @date   Created on: 1 февр. 2024 г.
+ * @author aso
+ */
+
+#ifndef COMPONENTS_UTILS_ASEMAPHORE
+#define COMPONENTS_UTILS_ASEMAPHORE
+
+#ifdef __cplusplus
+
+
+namespace semaphore
+{
+    ///@brief enumerator for asemaphore initial status
+    enum init { close, open };
+}; /* namespace semaphore */
+
+
+///@brief Base of the asemapfore types;
+class asemaphore_base
+{
+public:
+
+    virtual ~asemaphore_base();
+
+    ///@brief Take (block) the semaphore
+    BaseType_t Take(TickType_t ticks = portMAX_DELAY);
+
+    ///@brief Give (release) the semaphore
+    BaseType_t Give();
+
+    ///@brief Give (release) the semaphore
+    BaseType_t Release() { return Give(); };
+
+    ///@brief Get current count value if the semaphore is a counting semaphore
+    UBaseType_t count();
+
+    ///@brief get the semaphore handle
+    SemaphoreHandle_t handle() { return instance; };
+
+    ///@brief is semaphore was created?
+    bool created() { return instance != nullptr; };
+
+    ///@brief initialize semaphore as the binary semaphore
+    ///@parameter [in] opened	- is the created semaphore are opened at the initial state?
+    virtual bool Init(bool opened = false);
+
+    ///@brief initialize semaphore as the binary semaphore
+    ///@parameter [in] init	- is the created semaphore are opened at the initial state?
+    bool Init(semaphore::init init) { return Init(static_cast<bool>(init)); };
+
+    ///@brief alias initializing semafhore as the binary semaphore
+    ///@parameter [in] opened	- is the created semaphore are opened at the initial state?
+    bool InitBinary(bool opened = false) { return Init(opened); };
+
+    ///@brief alias initializing semafhore as the binary semaphore
+    ///@parameter [in] init	- is the created semaphore are opened at the initial state?
+    bool InitBinary(semaphore::init init) { return Init(init); };
+
+    ///@brief Create the counting semaphore
+    ///@parameter [in] maxc  - maximum count value that can be reached: when the semaphore reaches this value it can no longer be ‘given’.
+    ///@parameter [in] initc - initial count value assigned to the semaphore
+    virtual bool Init(UBaseType_t maxc, UBaseType_t initc = 0) = 0;
+    ///@brief alias initializing semafhore as counting semaphore
+    ///@parameter [in] maxc  - maximum count value that can be reached: when the semaphore reaches this value it can no longer be ‘given’.
+    ///@parameter [in] initc - initial count value assigned to the semaphore
+    bool InitCounting(UBaseType_t maxc, UBaseType_t initc = 0) { return Init(maxc, initc); };
+
+    ///@brief de-initialize semapthore, free it's memory
+    virtual void del();
+    void free() { del();};
+
+    protected:
+
+    ///@brief core of initializing binary semaphore - intended simply create of it & return result
+    ///@parameter [in] opened	- is the created semaphore are opened at the initial state?
+    virtual SemaphoreHandle_t InitBinCore() = 0;
+
+    SemaphoreHandle_t instance = nullptr; ///< Semaphore handler
+
+}; /* asemaphore_base */
+
+
+
+///@brief Base for semapfore types;
+class asemaphore: public asemaphore_base
+{
+public:
+
+    ///@brief Create the uninitialized semaphore semaphore
+    asemaphore() {};
+
+    ///@brief Create the binary semaphore
+    ///@parameter [in] opened	- is the created semaphore are opened at the initial state?
+    explicit asemaphore(bool opened);
+    ///@brief Create the binary semaphore
+    ///@parameter [in] init	- is the created semaphore are opened at the initial state?
+    explicit asemaphore(semaphore::init init);
+    ///@brief Create the counting semaphore
+    ///@parameter [in] maxc  - maximum count value that can be reached: when the semaphore reaches this value it can no longer be ‘given’.
+    ///@parameter [in] initc - initial count value assigned to the semaphore
+    asemaphore(UBaseType_t maxc, UBaseType_t initc = 0);
+
+    ///@brief Create the counting semaphore
+    ///@parameter [in] maxc  - maximum count value that can be reached: when the semaphore reaches this value it can no longer be ‘given’.
+    ///@parameter [in] initc - initial count value assigned to the semaphore
+    virtual bool Init(UBaseType_t maxc, UBaseType_t initc = 0) override;
+
+protected:
+
+    ///@brief core of initializing binary semaphore - simply create of it & return result
+    ///@parameter [in] opened	- is the created semaphore are opened at the initial state?
+    virtual SemaphoreHandle_t InitBinCore() override;
+
+public:
+
+    class stat: public asemaphore_base
+    {
+    public:
+
+	    ///@brief Create the binary semaphore
+	    ///@parameter [in] opened	- is the created semaphore are opened at the initial state?
+	    explicit stat(bool opened = false);
+	    ///@brief Create the binary semaphore with the enum semaphore::init
+	    ///@parameter [in] init	- is the created semaphore are opened at the initial state?
+	    explicit stat(semaphore::init init);
+
+	    ///@brief Create the counting semaphore
+	    stat(UBaseType_t maxc, UBaseType_t initc = 0);
+
+	    bool Init(semaphore::init init) { return asemaphore_base::Init(init); };
+	    bool Init(bool opened = false) override { return asemaphore_base::Init(opened); };
+	    ///@brief Create the counting semaphore
+	    bool Init(UBaseType_t maxc, UBaseType_t initc = 0) override;
+
+    protected:
+	StaticSemaphore_t body;	///< Body of the semaphore buffer
+
+    protected:
+
+        ///@brief core of initializing binary semaphore - simply create of it & return result
+        ///@parameter [in] opened	- is the created semaphore are opened at the initial state?
+        virtual SemaphoreHandle_t InitBinCore() override;
+
+    }; /* stat */
+
+}; /* class asemaphore */
+
+
+
+#else
+
+#error "This file was not intending for including in C-code!!!"
+
+#endif	//  __cplusplus
+
+#endif /* COMPONENTS_UTILS_ASEMAPHORE */
