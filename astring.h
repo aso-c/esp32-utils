@@ -22,7 +22,7 @@ extern "C"
 #endif
 
 
-/// @brief String 'str' is empty or NULL?
+/// @brief String 'str' is empty [""] or NULL?
 inline bool empty(const char* const str)
 {
     return str == NULL || str[0] == '\0';
@@ -51,9 +51,22 @@ bool no_str(const char[]);
 }; /* extern "C" */
 
 
+/// @brief String 'str' is empty [""] or NULL?
+inline bool empty(const std::string& str)
+{
+    return empty(str.c_str());
+}; /*  empty */
+
+
 namespace astr
 {
 
+
+    /// @brief String 'str' is empty [""] or NULL? - alias in the namespace astr::
+    inline bool empty(const std::string& str)
+    {
+        return ::empty(str);
+    }; /*  empty */
 
     /// @brief matching the confirmation string
     /// Is the string math the "Yes" string
