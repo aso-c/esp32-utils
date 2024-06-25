@@ -51,21 +51,21 @@ bool no_str(const char[]);
 }; /* extern "C" */
 
 
-/// @brief String 'str' is empty [""] or NULL?
-inline bool empty(const std::string& str)
-{
-    return empty(str.c_str());
-}; /*  empty */
+///// @brief String 'str' is empty [""] or NULL?
+//inline bool empty(const std::string& str)
+//{
+//    return empty(str.c_str());
+//}; /*  empty */
 
 
 namespace astr
 {
 
 
-    /// @brief String 'str' is empty [""] or NULL? - alias in the namespace astr::
+    /// @brief String 'str' is empty [""] or NULL?, C++ definition
     inline bool empty(const std::string& str)
     {
-        return ::empty(str);
+        return str.empty();
     }; /*  empty */
 
     /// @brief matching the confirmation string
@@ -98,7 +98,10 @@ namespace astr
 
 }; /* astr */
 
-#endif
+/// @brief String 'str' is empty [""] - alias of the the astr::empty(const std::string&)
+using astr::empty;
+
+#endif	// __cplusplus
 
 
 
