@@ -63,13 +63,13 @@ std::string astr::tolower(const std::string& str)
 /// string with only space chars or empty?
 bool astr::is_space(const std::string& str)
 {
-        bool resf = true;
+		bool resf = true;
 
-	ESP_LOGW(__PRETTY_FUNCTION__, "Input string is: [%s]", str.c_str());
+//	ESP_LOGW(__PRETTY_FUNCTION__, "Input string is: [%s]", str.c_str());
 
     if (str == "")
     {
-	ESP_LOGW(__func__, "Current string is empty string");
+//	ESP_LOGW(__func__, "Current string is empty string");
 	return true;
     }
 
