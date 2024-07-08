@@ -50,6 +50,15 @@ bool no_str(const char str[])
 
 /// String manipulation utility ---------------------------
 
+
+/// @brief trim leading & trailong spacec from the string
+//FIXME Stun only now. Needed really implementation!!!
+std::string trim(std::string&& str)
+{
+    return str;
+}; /* std::string trim(std::string&&) */
+
+
 /// string to lower case
 std::string astr::tolower(const std::string& str)
 {

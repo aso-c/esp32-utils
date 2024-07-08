@@ -6,7 +6,7 @@
  * @author  aso (Solomatov A.A.)
  *
  * @date Created 17.11.2022
- *	Updated  07.01.2024
+ *	Updated  07.07.2024
  *
  * @version 0.95
  */
@@ -76,6 +76,13 @@ namespace astr
     inline const char* no() { return "n"; };
 
     ///------- String manipulation utility
+
+    /// @brief trim leading & trailong spacec from the string
+    inline
+    std::string trim(const std::string& str) {
+	return std::string(str); }
+    //FIXME Stub only now. Needed really implementation!!!
+    std::string trim(std::string&& str);
 
     /// @brief string to lower case
     std::string tolower(const std::string&);
