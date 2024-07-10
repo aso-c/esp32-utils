@@ -78,14 +78,10 @@ namespace astr
     ///------- String manipulation utility
 
     /// @brief trim leading & trailong spacec from the string
-//    inline
-//    std::string trim(const std::string& str) {
-//	return std::string(str); }
-    //FIXME Stub only now. Needed really implementation!!!
-    std::string trim(std::string/*&&*/ str);
+    std::string trim(std::string str);
 
     /// @brief string to lower case
-    std::string tolower(const std::string&);
+    std::string tolower(std::string);
 
     /// @brief string with only space chars or empty?
     bool is_space(const std::string&);

@@ -75,13 +75,11 @@ namespace astr
 
 
     /// string to lower case
-    std::string tolower(const std::string& str)
+    std::string tolower(std::string str)
     {
-	    std::string buf = str;
-
-	for (char& c: buf)
+	for (char& c: str)
 	    c = ::tolower(static_cast<unsigned char>(c));
-	return buf;
+	return str;
     }; /* astr::tolower */
 
     /// string with only space chars or empty?
