@@ -6,9 +6,9 @@
  * @author  aso (Solomatov A.A.)
  *
  * @date Created 17.11.2022
- *	Updated  07.07.2024
+ *	Updated  10.07.2024
  *
- * @version 0.95
+ * @version 0.97
  */
 
 
@@ -49,6 +49,22 @@ bool no_str(const char[]);
 
 #ifdef __cplusplus
 }; /* extern "C" */
+
+
+/// class freewrapper - dispose memory by the "free()" procedure,
+/// that was allocated by the malloc()
+template <typename T>
+class freewrapper
+{
+public:
+    freewrapper(T* ptr) {data = ptr;};
+    ~freewrapper() {free(data);};
+
+    operator T*() {return data;}
+    operator const T*() {return data;}
+
+    T* data;
+}; /* freewrapper */
 
 
 namespace astr
