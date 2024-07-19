@@ -3,7 +3,7 @@
  *
  * @brief Envelope upon the ESP semaphores api
  *
- *	Need pre-included including file semphr.h
+ * @note  Need pre-included including file semphr.h
  *
  * @date   Created on: 1 февр. 2024 г.
  * @author aso

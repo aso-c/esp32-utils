@@ -1,4 +1,4 @@
-/*@file sync.hpp
+/*!@file sync.hpp
  *
  * @brief Syncronization utilily: combined the semaphore cless asemaphore, handler procedure for give the semaphore and event registration for this, header template file
  *
