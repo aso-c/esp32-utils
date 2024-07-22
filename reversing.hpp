@@ -51,15 +51,15 @@ namespace aso
 	class const_reverse
 	{
 	public:
-	    const_reverse(const T& iterable, size_t f_offs = 0, size_t end_offs = 0) : refiterable(iterable),
+	    const_reverse(const T& iterable, int f_offs = 0, int end_offs = 0) : refiterable(iterable),
 		front_offset(f_offs), tail_offset(end_offs) {};
-	    typename T::reverse_iterator begin() { return refiterable.crbegin() + front_offset; }
-	    typename T::reverse_iterator end() { return refiterable.crend() - tail_offset; }
+	    typename T::const_reverse_iterator begin() { return refiterable.crbegin() + front_offset; }
+	    typename T::const_reverse_iterator end() { return refiterable.crend() - tail_offset; }
 
 	private:
 	    const T& refiterable;
-	    const size_t front_offset;
-	    const size_t tail_offset;
+	    const int front_offset;
+	    const int tail_offset;
 	}; /* const_reverse_adapter */
 
     }; /* adaptors */
