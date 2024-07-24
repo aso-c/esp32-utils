@@ -30,37 +30,42 @@ namespace aso
 {
     namespace adaptors
     {
-
+	/// Reverse adaptor
 	template <typename T>
 	class reverse
 	{
 	public:
-	    reverse(T&& iterable, size_t f_offs = 0, size_t end_offs = 0) : refiterable(std::forward<T>(iterable)),
+	    reverse(T&& iterable, size_t f_offs = 0, size_t end_offs = 0) : refiter(std::forward<T>(iterable)),
 		front_offset(f_offs), tail_offset(end_offs) {};
-	    typename T::reverse_iterator begin() { return refiterable.rbegin() + front_offset; }
-	    typename T::reverse_iterator end() { return refiterable.rend() - tail_offset; }
+	    typename T::reverse_iterator begin() { return refiter.rbegin() + front_offset; }
+	    typename T::reverse_iterator end() { return refiter.rend() - tail_offset; }
 
 	private:
-	    T&& refiterable;
+	    T&& refiter;
 	    const size_t front_offset;
 	    const size_t tail_offset;
-	}; /* reverse */
 
-	/// Const reverse adaptors
-	template <typename T>
-	class const_reverse
+	}; /* aso::adaptors::reverse */
+
+	namespace constant
 	{
-	public:
-	    const_reverse(const T& iterable, int f_offs = 0, int end_offs = 0) : refiterable(iterable),
-		front_offset(f_offs), tail_offset(end_offs) {};
-	    typename T::const_reverse_iterator begin() { return refiterable.crbegin() + front_offset; }
-	    typename T::const_reverse_iterator end() { return refiterable.crend() - tail_offset; }
+	    /// Const reverse adaptors
+	    template <typename T>
+	    class reverse
+	    {
+	    public:
+		reverse(const T& iterable, int f_offs = 0, int end_offs = 0) : refiter(iterable),
+		    front_offset(f_offs), tail_offset(end_offs) {};
+		typename T::const_reverse_iterator begin() { return refiter.crbegin() + front_offset; }
+		typename T::const_reverse_iterator end() { return refiter.crend() - tail_offset; }
 
-	private:
-	    const T& refiterable;
-	    const int front_offset;
-	    const int tail_offset;
-	}; /* const_reverse_adapter */
+	    private:
+		const T& refiter;
+		const int front_offset;
+		const int tail_offset;
+	    }; /* const_reverse_adapter */
+
+	}; /* aso::adaptors::constant::reverse */
 
     }; /* adaptors */
 
