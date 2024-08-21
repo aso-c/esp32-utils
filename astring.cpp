@@ -56,9 +56,8 @@ namespace astr
     /// String manipulation utility ---------------------------
 
 
-    /// @brief trim leading & trailong spacec from the string
-    //FIXME Stun only now. Needed really implementation!!!
-    std::string trim(std::string/*&&*/ str)
+    /// @brief trim leading & trailing spaces from the string
+    std::string trim(std::string str)
     {
 	    size_t head, tail;
 
@@ -71,7 +70,49 @@ namespace astr
 		break;
 
 	return str.substr(head, tail - head);
-    }; /* astr::trim(std::string&&) */
+    }; /* astr::trim(std::string) */
+
+    /// @brief trim leading & trailing spaces from the string
+    std::string new_trim(std::string str)
+    {
+	    std::string::const_iterator head/* = str.cbegin()*/;
+	    std::string::const_iterator tail /*= str.cend()*/;
+
+	for (head = str.cbegin(); head < str.cend(); head++)
+	{
+	    ESP_LOGI("new_trim", "head_iter is: [%c]", *head);
+	    if (!std::isspace(*head))
+		break;
+	};
+
+	for (tail = --str.cend(); tail > str.cbegin(); tail--)
+	{
+	    ESP_LOGI("new_trim", "tail_iter is: [%c]", *tail);
+	    if (!std::isspace(*tail))
+		break;
+	};
+
+	return std::move(std::string(head, tail));
+    }; /* astr::new_trim(std::string) */
+
+#if 0
+    /// @brief trim leading & trailong spacec from the string
+    std::string_view trim(std::string_view vw)
+    {
+	    size_t head, tail;
+
+
+	for (head = 0; head < str.length(); head++)
+	    if (!std::isspace(str[head]))
+		break;
+
+	for (tail = str.length(); tail > head; tail--)
+	    if (!std::isspace(str[tail - 1]))
+		break;
+
+	return str.substr(head, tail - head);
+    }; /* astr::trim(std::string_view) */
+#endif
 
 
     /// string to lower case
@@ -135,6 +176,7 @@ namespace astr
 	return accept && !decline;
 
     }; /* astr::is_zero */
+
 
 }; /* namespace astr */
 

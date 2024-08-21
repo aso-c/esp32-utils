@@ -71,6 +71,40 @@ namespace astr
 {
 
 
+#if 0
+    //--[ system procedures ]--------------------------------------------------------------------------
+
+    //! Make list of the std::string from the array of the pointer to asciiz string char*[]
+    // @param[in]  argc - counter of the strings in array
+    // @param[in]  argv - array of pointer to the asciiz strings
+    // @return          - created list of std::string with passed strings
+    std::list<std::string> make_stringlist(int argc, char *argv[])
+    {
+    	std::list<std::string> lst(argc, "");
+    	int i = 0;
+
+        for (std::string& curr : lst)
+    	curr = argv[i++];
+
+        return lst;
+    }; /* make_stringlist() */
+
+    //! Make vector of the std::string from the array of the pointer to asciiz string char*[]
+    // @param[in]  argc - counter of the strings in array
+    // @param[in]  argv - array of pointer to the asciiz strings
+    // @return          - created std:vector object of std::string with passed strings
+    std::vector<std::string> make_stringvector(int argc, char *argv[])
+    {
+    	std::vector<std::string> vect(argc, "");
+    	int i = 0;
+
+        for (std::string& curr : vect)
+    	curr = argv[i++];
+
+        return vect;
+    }; /* make_stringvector() */
+#endif
+
     /// @brief String 'str' is empty [""] or NULL?, C++ definition
     inline bool empty(const std::string& str)
     {
@@ -95,6 +129,13 @@ namespace astr
 
     /// @brief trim leading & trailong spacec from the string
     std::string trim(std::string str);
+    /// @brief trim leading & trailong spacec from the string
+    std::string new_trim(std::string str);
+
+
+    /// @brief trim leading & trailong spacec from the string_view
+    std::string_view trim(std::string_view strv);
+
 
     /// @brief string to lower case
     std::string tolower(std::string);
