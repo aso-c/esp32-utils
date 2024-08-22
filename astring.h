@@ -129,8 +129,9 @@ namespace astr
 
     /// @brief trim leading & trailong spacec from the string
     std::string trim(std::string str);
-    /// @brief trim leading & trailong spacec from the string
-    std::string new_trim(std::string str);
+    /// @brief return trimmed string - w/o leading & trailing spaces of the string
+    /// @return  new trimmed string
+    std::string trimmed(const std::string& str);
 
 
     /// @brief trim leading & trailong spacec from the string_view
