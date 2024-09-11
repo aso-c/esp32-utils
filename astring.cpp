@@ -57,62 +57,41 @@ namespace astr
     /// String manipulation utility ---------------------------
 
 
-    /// @brief trim leading & trailing spaces from the string
-    std::string trim(std::string str)
-    {
-	    size_t head, tail;
-
-	for (head = 0; head < str.length(); head++)
-	    if (!std::isspace(str[head]))
-		break;
-
-	for (tail = str.length(); tail > head; tail--)
-	    if (!std::isspace(str[tail - 1]))
-		break;
-
-	return str.substr(head, tail - head);
-    }; /* astr::trim(std::string) */
+//    /// @brief trim leading & trailing spaces from the string
+//    std::string trim(std::string str)
+//    {
+//	    size_t head, tail;
+//
+//	for (head = 0; head < str.length(); head++)
+//	    if (!std::isspace(str[head]))
+//		break;
+//
+//	for (tail = str.length(); tail > head; tail--)
+//	    if (!std::isspace(str[tail - 1]))
+//		break;
+//
+//	return str.substr(head, tail - head);
+//    }; /* astr::trim(std::string) */
 
     // return trimmed string - w/o leading & trailing spaces of the string
     std::string trimmed(const std::string& str)
     {
-//	    std::string::const_iterator head;
-//	    std::string::const_iterator tail;
 	    const char* head = nullptr;
 	    const char* tail = nullptr;
 
-//	for (head = str.cbegin(); head < str.cend(); head++)
 	for (const char &c : str)
-	{
-//	    ESP_LOGI("new_trim", "head_iter is: [%c]", *head);
-	    ESP_LOGI("astr::trimmed()/head", "curr char is: [%c]", c);
-//	    if (!std::isspace(*head))
-//		break;
 	    if (!std::isspace(c))
 	    {
-		ESP_LOGI("astr::trimmed()/head", "Founded is non-space char: [%c]", c);
 		head = &c;
 		break;
 	    }; /* if !std::isspace(c) */
 
-	}; /* for const char &c : str */
-	ESP_LOGI("astr::trimmed()/after-head", "head ptr is: [%c]", head? *head: '\0');
-
-//	for (tail = --str.cend(); tail > str.cbegin(); tail--)
 	for (const char& c : aso::adaptors::constant::reverse(str))
-	{
-//	    ESP_LOGI("new_trim", "tail_iter is: [%c]", *tail);
-	    ESP_LOGI("astr::trimmed()/tail", "tail_iter is: [%c]", c);
-//	    if (!std::isspace(*tail))
-//		break;
 	    if (!std::isspace(c))
 	    {
-		ESP_LOGI("astr::trimmed()/tail", "Founded is non-space char: [%c]", c);
-		tail = &c;
+		tail = &c + 1;
 		break;
 	    }; /* if !std::isspace(c) */
-	}; /* for const char& c : aso::adaptors::constant::reverse(str) */
-	ESP_LOGI("astr::trimmed()/after-head", "tail ptr is: [%c]", tail? *tail: '\0');
 
 	return std::move(std::string(head, tail));
     }; /* astr::new_trim(const std::string&) */

@@ -127,11 +127,16 @@ namespace astr
 
     ///------- String manipulation utility
 
-    /// @brief trim leading & trailong spacec from the string
-    std::string trim(std::string str);
     /// @brief return trimmed string - w/o leading & trailing spaces of the string
     /// @return  new trimmed string
     std::string trimmed(const std::string& str);
+    /// @brief trim leading & trailong spacec from the string "in place"
+    /// @param[in,out]  str - string for trailing spaces
+    /// @return         trimmed passed string
+    inline std::string& trim(std::string& str) {
+	str = trimmed(str);
+	return str;
+    };
 
 
     /// @brief trim leading & trailong spacec from the string_view
