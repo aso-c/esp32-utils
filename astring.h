@@ -6,9 +6,9 @@
  * @author  aso (Solomatov A.A.)
  *
  * @date Created 17.11.2022
- *	Updated  10.07.2024
+ *	Updated  16.09.2024
  *
- * @version 0.97
+ * @version v.0.98
  */
 
 

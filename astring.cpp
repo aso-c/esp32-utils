@@ -4,10 +4,11 @@
  * 	C++ body file
  *
  * @date Created on: 6 янв. 2024 г.
+ *	 Updated  16.09.2024
  *
  * @author:  aso (Solomatov A.A.)
  *
- * @version: 0.1
+ * @version: v.0.98
  */
 
 #include <cstring>
@@ -102,54 +103,23 @@ namespace astr
     {
 	    bool space_only = true;
 
-//	for (size_t front = 0; front < vw.size(); front++)
-//	    if (!std::isspace(vw[front]))
-//	    {
-//		space_only = false;
-//		vw.remove_prefix(front);
-//		break;
-//	    }; /* if !std::isspace(vw[front]) */
-
 	for (const char &c : vw)
-	{
-	    ESP_LOGI(__func__, "Curr char [%c], prefix no %i", c, std::distance(vw.begin(), &c));
-
 	    if (!std::isspace(c))
 	    {
 		space_only = false;
 		vw.remove_prefix(std::distance(vw.begin(), &c));
 		break;
 	    }; /* if !std::isspace(c) */
-	}
-
 
 	if (space_only)
 	    vw.remove_suffix(vw.length());
 
-	ESP_LOGI(__PRETTY_FUNCTION__, "Trim tail the string wiew %s", vw.data());
-
-//	for (size_t tail = 0; tail < vw.size(); tail++)
-//	{
-//
-//		ESP_LOGI(__func__, "Curr char [%c], tail no %i", vw[vw.size() - 1 - tail], tail);
-//
-//	    if (!std::isspace(vw[vw.size() - 1 - tail]))
-//	    {
-//		vw.remove_suffix(tail);
-//		break;
-//	    }; /* if !std::isspace(vw[tail - 1]) */
-//	};
-
 	for (const char& c : aso::adaptors::constant::reverse(vw))
-	{
-	    ESP_LOGI(__func__, "Curr char [%c], tail no %i", c, std::distance(&c, vw.end()));
 	    if (!std::isspace(c))
 	    {
 		vw.remove_suffix(std::distance(&c, vw.end()) - 1);
 		break;
 	    }; /* if !std::isspace(c) */
-	}
-
 
 	return vw;
     }; /* astr::trim(std::string_view) */
