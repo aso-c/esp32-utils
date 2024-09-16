@@ -130,7 +130,7 @@ namespace astr
     /// @brief return trimmed string - w/o leading & trailing spaces of the string
     /// @return  new trimmed string
     std::string trimmed(const std::string& str);
-    /// @brief trim leading & trailong spacec from the string "in place"
+    /// @brief trim leading & trailшng spacec from the string "in place"
     /// @param[in,out]  str - string for trailing spaces
     /// @return         trimmed passed string
     inline std::string& trim(std::string& str) {
@@ -140,7 +140,10 @@ namespace astr
 
 
     /// @brief trim leading & trailong spacec from the string_view
-    std::string_view trim(std::string_view strv);
+    std::string_view& trim(std::string_view& strv);
+
+    /// @brief return trimmed string w/o modifing sources string from the string_view
+    inline std::string_view trimmed(std::string_view strv) { return trim(strv); };
 
 
     /// @brief string to lower case

@@ -94,26 +94,65 @@ namespace astr
 	    }; /* if !std::isspace(c) */
 
 	return std::move(std::string(head, tail));
-    }; /* astr::new_trim(const std::string&) */
+    }; /* astr::trimmed(const std::string&) */
 
-#if 0
+
     /// @brief trim leading & trailong spacec from the string
-    std::string_view trim(std::string_view vw)
+    std::string_view& trim(std::string_view& vw)
     {
-	    size_t head, tail;
+	    bool space_only = true;
 
+//	for (size_t front = 0; front < vw.size(); front++)
+//	    if (!std::isspace(vw[front]))
+//	    {
+//		space_only = false;
+//		vw.remove_prefix(front);
+//		break;
+//	    }; /* if !std::isspace(vw[front]) */
 
-	for (head = 0; head < str.length(); head++)
-	    if (!std::isspace(str[head]))
+	for (const char &c : vw)
+	{
+	    ESP_LOGI(__func__, "Curr char [%c], prefix no %i", c, std::distance(vw.begin(), &c));
+
+	    if (!std::isspace(c))
+	    {
+		space_only = false;
+		vw.remove_prefix(std::distance(vw.begin(), &c));
 		break;
+	    }; /* if !std::isspace(c) */
+	}
 
-	for (tail = str.length(); tail > head; tail--)
-	    if (!std::isspace(str[tail - 1]))
+
+	if (space_only)
+	    vw.remove_suffix(vw.length());
+
+	ESP_LOGI(__PRETTY_FUNCTION__, "Trim tail the string wiew %s", vw.data());
+
+//	for (size_t tail = 0; tail < vw.size(); tail++)
+//	{
+//
+//		ESP_LOGI(__func__, "Curr char [%c], tail no %i", vw[vw.size() - 1 - tail], tail);
+//
+//	    if (!std::isspace(vw[vw.size() - 1 - tail]))
+//	    {
+//		vw.remove_suffix(tail);
+//		break;
+//	    }; /* if !std::isspace(vw[tail - 1]) */
+//	};
+
+	for (const char& c : aso::adaptors::constant::reverse(vw))
+	{
+	    ESP_LOGI(__func__, "Curr char [%c], tail no %i", c, std::distance(&c, vw.end()));
+	    if (!std::isspace(c))
+	    {
+		vw.remove_suffix(std::distance(&c, vw.end()) - 1);
 		break;
+	    }; /* if !std::isspace(c) */
+	}
 
-	return str.substr(head, tail - head);
+
+	return vw;
     }; /* astr::trim(std::string_view) */
-#endif
 
 
     /// string to lower case
