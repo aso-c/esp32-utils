@@ -71,6 +71,56 @@ namespace astr
 {
 
 
+    //--[ system procedures ]--------------------------------------------------------------------------
+
+    //! Make container, stored data from the pure C array, passed as parameter (e.g. std::list or std::vector)
+    // from the passed pure C array of the TData
+    // @param[in]  argc - counter of the strings in array
+    // @param[in]  argv - array of pointer to the asciiz strings
+    // @return          - created container, initialized with values of the passed array
+    template <template <typename> class Holder, typename TData>
+    Holder<TData> makestorx(int argc, TData argv[])
+    {
+    	    Holder<TData> holder(argc);
+
+	for (int i = 0; i < argc; i++)
+	   holder[i] = argv[i];
+
+        return holder;
+    }; /* makestor() */
+    //! Make container, stored data from the pure C array, passed as parameter (intended stdlib classes,
+    //  e.g. std::list or std::vector)
+    template <typename Holder>
+    Holder makestor(int argc, typename Holder::value_type argv[])
+    {
+    	    Holder holder(argc);
+
+	for (int i = 0; i < argc; i++)
+	   holder[i] = argv[i];
+
+        return holder;
+    }; /* makestor() */
+
+
+    //! Make container with pointer to containers (e.g. list of the pointers to std::string)
+    // from the array of the pointer to asciiz string char*[]
+    // @param[in]  argc - counter of the strings in array
+    // @param[in]  argv - array of pointer to the asciiz strings
+    // @return          - created list of std::string with passed strings
+    template <template <typename> class OutHolder, template <typename> class HoldStor, typename TData>
+    OutHolder<HoldStor<TData> > mk_containerholder(int argc, TData *argv[])
+    {
+    	    OutHolder<HoldStor<TData> > holder(argc);
+//    	    int i = 0;
+//
+//        for (HoldStor<TData>& curr : holder)
+//            curr = argv[i++];
+	for (int i = 0; i < argc; i++)
+	    holder[i] = argv[i];
+
+        return holder;
+    }; /* make_stringlist() */
+
 #if 0
     //--[ system procedures ]--------------------------------------------------------------------------
 
