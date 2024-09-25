@@ -93,12 +93,10 @@ namespace astr
     template <typename Holder>
     Holder makestor(int argc, typename Holder::value_type argv[])
     {
-    	    Holder holder(argc);
+	    Holder holder;
 
-	for (int i = 0; i < argc; i++)
-	   holder[i] = argv[i];
-
-        return holder;
+	holder.insert(std::end(holder), argv, argv + argc);
+	return holder;
     }; /* makestor() */
 
 
@@ -110,13 +108,16 @@ namespace astr
     template <template <typename> class OutHolder, template <typename> class HoldStor, typename TData>
     OutHolder<HoldStor<TData> > mk_containerholder(int argc, TData *argv[])
     {
-    	    OutHolder<HoldStor<TData> > holder(argc);
-//    	    int i = 0;
-//
-//        for (HoldStor<TData>& curr : holder)
-//            curr = argv[i++];
-	for (int i = 0; i < argc; i++)
-	    holder[i] = argv[i];
+//    	    OutHolder<HoldStor<TData> > holder(argc);
+////    	    int i = 0;
+////
+////        for (HoldStor<TData>& curr : holder)
+////            curr = argv[i++];
+//	for (int i = 0; i < argc; i++)
+//	    holder[i] = argv[i];
+
+	OutHolder<HoldStor<TData> > holder;
+	holder.insert(holder.end(), argv, argv + argc);
 
         return holder;
     }; /* mk_containerholder() */
