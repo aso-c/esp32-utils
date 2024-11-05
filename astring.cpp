@@ -94,12 +94,12 @@ namespace astr
 		break;
 	    }; /* if !std::isspace(c) */
 
-	return std::move(std::string(head, tail));
+	return std::string(head, tail);
     }; /* astr::trimmed(const std::string&) */
 
 
     /// @brief trim leading & trailong spacec from the string
-    std::string_view& trim(std::string_view& vw)
+    std::string_view& trim(std::string_view &vw)
     {
 	    bool space_only = true;
 
