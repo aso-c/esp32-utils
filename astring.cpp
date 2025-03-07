@@ -58,22 +58,6 @@ namespace astr
     /// String manipulation utility ---------------------------
 
 
-//    /// @brief trim leading & trailing spaces from the string
-//    std::string trim(std::string str)
-//    {
-//	    size_t head, tail;
-//
-//	for (head = 0; head < str.length(); head++)
-//	    if (!std::isspace(str[head]))
-//		break;
-//
-//	for (tail = str.length(); tail > head; tail--)
-//	    if (!std::isspace(str[tail - 1]))
-//		break;
-//
-//	return str.substr(head, tail - head);
-//    }; /* astr::trim(std::string) */
-
     // return trimmed string - w/o leading & trailing spaces of the string
     std::string trimmed(const std::string& str)
     {

@@ -6,9 +6,9 @@
  * @author  aso (Solomatov A.A.)
  *
  * @date Created 17.11.2022
- *	Updated  16.09.2024
+ *	Updated  07.03.2025
  *
- * @version v.0.98
+ * @version v.0.99
  */
 
 
@@ -17,13 +17,12 @@
 
 
 #ifdef __cplusplus
-extern "C"
-{
-#endif
 
+
+/// C++ specialization
 
 /// @brief String 'str' is empty [""] or NULL?
-inline bool empty(const char* const str)
+constexpr bool empty(const char* const str)
 {
     return str == NULL || str[0] == '\0';
 }; /*  empty */
@@ -31,11 +30,15 @@ inline bool empty(const char* const str)
 
 /// @brief is the path terminated a slash
 /// as a directory name
-inline bool is_dirname(const char path[])
+constexpr bool is_dirname(const char path[])
 {
-    return !empty(path) && path[strlen(path)] == '/';
+    return !empty(path) && std::string_view(path).back() == '/';
 }; /* is_dirname */
 
+
+extern "C"
+{
+#endif
 
 /// @brief match confirmation string
 /// pure C version
@@ -123,24 +126,27 @@ namespace astr
     }; /* mk_containerholder() */
 
     /// @brief String 'str' is empty [""] or NULL?, C++ definition
-    inline bool empty(const std::string& str)
+//    inline bool empty(const std::string& str)
+    inline bool empty(const std::string_view str)
     {
         return str.empty();
     }; /*  empty */
 
     /// @brief matching the confirmation string
     /// Is the string math the "Yes" string
-    bool confirm(const std::string&);
+//    bool confirm(const std::string&);
+    bool confirm(const std::string_view);
 
     /// matching the negation string
     ///Is the string math the "No" string
-    bool decline(const std::string&);
+//    bool decline(const std::string&);
+    bool decline(const std::string_view);
 
     /// @brief Return the "Yes" string
-    inline const char* yes() { return "y";};
+    constexpr const char* yes() { return "y";};
 
     /// @brief Return the "No" string
-    inline const char* no() { return "n"; };
+    constexpr const char* no() { return "n"; };
 
     ///------- String manipulation utility
 
@@ -156,10 +162,13 @@ namespace astr
     };
 
 
-    /// @brief trim leading & trailong spacec from the string_view
+    /// @brief trim leading & trailong spaces from the string_view
+    /// @return  new trimmed string
     std::string_view& trim(std::string_view& strv);
 
     /// @brief return trimmed string w/o modifing sources string from the string_view
+    /// @param[in,out]  str - string for trailing spaces
+    /// @return         trimmed passed string
     inline std::string_view trimmed(std::string_view strv) { return trim(strv); };
 
 
@@ -179,6 +188,23 @@ namespace astr
 
 /// @brief String 'str' is empty [""] - alias of the the astr::empty(const std::string&)
 using astr::empty;
+
+#else	// not defined __cplusplus
+/// Pure C specialization
+
+/// @brief String 'str' is empty [""] or NULL?
+inline bool empty(const char* const str)
+{
+    return str == NULL || str[0] == '\0';
+}; /*  empty */
+
+
+/// @brief is the path terminated a slash
+/// as a directory name
+inline bool is_dirname(const char path[])
+{
+    return !empty(path) && path[strlen(path)] == '/';
+}; /* is_dirname */
 
 #endif	// __cplusplus
 
