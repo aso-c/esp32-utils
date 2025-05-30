@@ -6,9 +6,9 @@
  * @author  aso (Solomatov A.A.)
  *
  * @date Created 17.11.2022
- *	Updated  07.03.2025
+ *	Updated  29.05.2025
  *
- * @version v.0.99
+ * @version v.0.99.1
  */
 
 
@@ -17,6 +17,18 @@
 
 
 #ifdef __cplusplus
+
+/// Convert an identificator to a string (by enclosing the identifier in quotation marks)
+#define __INN_STR__(str) #str
+#define STRING(str) __INN_STR__(str)
+
+/// Create a std::string literal from an ANSI C string
+#define STRLIT(str)	__inner_strliteral__(str)
+#define __inner_strliteral__(str) str##s
+
+/// Create a std::string_view literal from an ANSI C string
+#define STRVIEWLIT(str)	__inner_strviewlit__(str)
+#define __inner_strviewlit__(str) str##sv
 
 
 /// C++ specialization
